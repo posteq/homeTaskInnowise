@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'by.innowise.TkachukIvan'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.apache.logging.log4j:log4j-bom:2.25.2')
+    implementation 'org.apache.logging.log4j:log4j-api:${log4j-api.version}'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
