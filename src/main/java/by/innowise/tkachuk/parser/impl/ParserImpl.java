@@ -1,8 +1,6 @@
 package by.innowise.tkachuk.parser.impl;
 
 import by.innowise.tkachuk.exception.UnexpectedValueException;
-import by.innowise.tkachuk.factory.ArrayFactory;
-import by.innowise.tkachuk.factory.impl.DefaultArrayFactory;
 import by.innowise.tkachuk.parser.Parser;
 import by.innowise.tkachuk.validator.ArrayValidator;
 import by.innowise.tkachuk.validator.impl.ArrayValidatorImpl;
@@ -17,7 +15,6 @@ public class ParserImpl implements Parser {
     private static final String REGEX_INTEGER = "-?\\d+";
 
     private final Logger logger = LogManager.getLogger(ParserImpl.class);
-    private final ArrayFactory factory = new DefaultArrayFactory();
     private final ArrayValidator validator = new ArrayValidatorImpl();
 
     public Optional<int[]> parseLine(String line){
