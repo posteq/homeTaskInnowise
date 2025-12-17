@@ -17,10 +17,14 @@ public class CustomArray implements Observable {
         this.array = arr;
     }
 
+    public void setElement(int index, int value){
+        array[index] = value;
+        notifyObservers();
+    }
+
     public long getId() {
         return id;
     }
-
 
     public int[] getArray() {
         return Arrays.copyOf(array,array.length);

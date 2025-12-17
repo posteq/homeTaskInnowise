@@ -1,7 +1,6 @@
 package by.innowise.tkachuk.repository.impl;
 
 import by.innowise.tkachuk.entity.CustomArray;
-import by.innowise.tkachuk.exception.UnexpectedValueException;
 import by.innowise.tkachuk.repository.ArrayRepository;
 import by.innowise.tkachuk.specification.Specification;
 import by.innowise.tkachuk.warehouse.Warehouse;
@@ -23,7 +22,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
         return instance;
     }
 
-    public void add(CustomArray array) throws UnexpectedValueException {
+    public void add(CustomArray array) {
         array.subscribe(Warehouse.getInstance());
         arrays.add(array);
         Warehouse.getInstance().update(array);
@@ -46,7 +45,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
 
     @Override
     public List<CustomArray> sort(Comparator<CustomArray> comparator) {
-        List<CustomArray> result = new ArrayList<>();
+        List<CustomArray> result = new ArrayList<>(arrays);
         result.sort(comparator);
         return result;
     }

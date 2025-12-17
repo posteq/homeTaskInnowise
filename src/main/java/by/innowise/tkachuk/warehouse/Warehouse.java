@@ -6,17 +6,24 @@ import by.innowise.tkachuk.exception.UnexpectedValueException;
 import by.innowise.tkachuk.observer.Observer;
 import by.innowise.tkachuk.service.ArrayService;
 import by.innowise.tkachuk.service.impl.ArrayServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Warehouse implements Observer {
 
-    private static Warehouse INSTANCE;
-    private Map<Long, ArrayData> storage = new HashMap<>();
-    private ArrayService service = new ArrayServiceImpl();
+    private final Logger logger = LogManager.getLogger(Warehouse.class);
 
-    private Warehouse() {}
+    private static Warehouse INSTANCE;
+    private final Map<Long, ArrayData> storage ;
+    private final ArrayService service ;
+
+    private Warehouse() {
+        storage = new HashMap<>();
+        service = new ArrayServiceImpl();
+    }
 
     public static Warehouse getInstance() {
         if (INSTANCE == null) {
@@ -26,8 +33,12 @@ public class Warehouse implements Observer {
     }
 
     @Override
-    public void update(CustomArray array) throws UnexpectedValueException {
-        storage.put(array.getId(), calculateArrayData(array));
+    public void update(CustomArray array) {
+        try {
+            storage.put(array.getId(), calculateArrayData(array));
+        } catch (UnexpectedValueException e) {
+            logger.error(e.getMessage());
+        }
     }
 
     public ArrayData getArrayData(long id) {
@@ -42,7 +53,7 @@ public class Warehouse implements Observer {
             double avg = service.findAvgValue(array);
             return new ArrayData(max,min,avg,sum);
         }catch (Exception e) {
-            throw new UnexpectedValueException("Throw became calculate data of array");
+            throw new UnexpectedValueException(e.getMessage());
         }
     }
 }
